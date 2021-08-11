@@ -8,7 +8,8 @@ const controller = {
         return res.status(200).send({msg: 'get API - controlador'});
     },
     usuariosPost: (req, res) => {
-        return res.status(200).send({msg: 'get API - controlador'});
+        const body = req.body;
+        return res.status(200).send(body);
     },
     usuariosDelete: (req, res) => {
         return res.status(200).send({msg: 'get API - controlador'});

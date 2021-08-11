@@ -16,7 +16,10 @@ class Server {
     middlewares(){
         
         //Cors
-        this.app.use(cors())
+        this.app.use(cors());
+
+        //Lectura y parseo del body
+        this.app.use(express.json());
 
         //Directorio public
         this.app.use(express.static('public'));
