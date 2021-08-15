@@ -22,8 +22,15 @@ const existeUsuarioPorId = async (id) => {
     }
 }
 
+const esNumero = async (par) => {
+    if (isNaN(par) && par != undefined) {
+        throw new Error(`El query '${par}' debe ser un número`);
+    }
+}
+
 module.exports = {
     esRoleValido,
     emailExiste,
-    existeUsuarioPorId
+    existeUsuarioPorId,
+    esNumero
 };

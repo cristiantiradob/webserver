@@ -3,12 +3,17 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 
 const controller = {
-    
-    usuariosGet: (req, res) => {
-        // Obteniendo querys
-        const { q, nombre, apikey } = req.query;
 
-        return res.status(200).send({ "q": q, "nombre": nombre, "apikey": apikey });
+    usuariosGet: async (req, res) => {
+        // Obteniendo querys
+        // const { q, nombre, apikey } = req.query;
+        const { limit = 5, from = 0 } = req.query;
+
+        const usuarios = await Usuario.find()
+            .skip(parseInt(from))
+            .limit(parseInt(limit));
+
+        return res.status(200).send(usuarios);
     },
 
     usuariosPut: async (req, res) => {
@@ -22,7 +27,7 @@ const controller = {
             resto.password = bcryptjs.hashSync(password, salt);
         }
 
-        const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+        const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
 
         return res.status(200).send(usuario);
     },
@@ -39,7 +44,7 @@ const controller = {
         // Guardar en DB
         await usuario.save();
 
-        return res.status(200).send({ usuario });
+        return res.status(200).send(usuario);
     },
 
     usuariosDelete: (req, res) => {

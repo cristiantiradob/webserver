@@ -4,9 +4,13 @@ const router = Router();
 
 const userControllers = require('../controllers/usuarios');
 const validarCampos = require('../middlewares/validar-campos');
-const { esRoleValido, emailExiste, existeUsuarioPorId } = require('../helpers/db-validators');
+const { esRoleValido, emailExiste, existeUsuarioPorId, esNumero } = require('../helpers/db-validators');
 
-router.get('/', userControllers.usuariosGet)
+router.get('/', [
+    check('from').custom(esNumero),
+    check('limit').custom(esNumero),
+    validarCampos
+], userControllers.usuariosGet)
 
 router.put('/:id', [
     check('id', 'No es un ID válido').isMongoId(),
