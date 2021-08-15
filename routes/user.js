@@ -7,7 +7,7 @@ const validarCampos = require('../middlewares/validar-campos');
 const {esRoleValido, emailExiste} = require('../helpers/db-validators');
 
 router.get('/', userControllers.usuariosGet)
-router.put('/', userControllers.usuariosPut)
+router.put('/:id', userControllers.usuariosPut)
 router.post('/', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'El password debe ser más de 6 letras').isLength({ min: 6 }),

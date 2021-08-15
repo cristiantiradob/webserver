@@ -9,8 +9,20 @@ const controller = {
 
         return res.status(200).send({ "q": q, "nombre": nombre, "apikey": apikey });
     },
-    usuariosPut: (req, res) => {
-        return res.status(200).send({ msg: 'get API - controlador' });
+    usuariosPut: async (req, res) => {
+        const { id } = req.params;
+        const { password, google, correo, ...resto } = req.body;
+
+        // TODO validar contra base de datos
+        if (password) {
+            // Encriptar la contraseña
+            const salt = bcryptjs.genSaltSync(10);
+            resto.password = bcryptjs.hashSync(password, salt);
+        }
+
+        const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+
+        return res.status(200).send(usuario);
     },
     usuariosPost: async (req, res) => {
 
