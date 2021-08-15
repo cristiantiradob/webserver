@@ -3,15 +3,17 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 
 const controller = {
+    
     usuariosGet: (req, res) => {
         // Obteniendo querys
         const { q, nombre, apikey } = req.query;
 
         return res.status(200).send({ "q": q, "nombre": nombre, "apikey": apikey });
     },
+
     usuariosPut: async (req, res) => {
         const { id } = req.params;
-        const { password, google, correo, ...resto } = req.body;
+        const { _id, password, google, correo, ...resto } = req.body;
 
         // TODO validar contra base de datos
         if (password) {
@@ -24,6 +26,7 @@ const controller = {
 
         return res.status(200).send(usuario);
     },
+
     usuariosPost: async (req, res) => {
 
         const { nombre, correo, password, rol } = req.body;
@@ -38,6 +41,7 @@ const controller = {
 
         return res.status(200).send({ usuario });
     },
+
     usuariosDelete: (req, res) => {
         return res.status(200).send({ msg: 'get API - controlador' });
     }
